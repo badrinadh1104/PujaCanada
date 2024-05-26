@@ -25,15 +25,60 @@
             </form>
         </div>
         <div class="customer-signup">
-            <form *ngIf="!show">
+            <form *ngIf="!show" [formGroup]="signupform" (ngSubmit)="signUp()" class="needs-validation">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        <input type="email" class="form-control" id="uemail" placeholder="Email"
+                            formControlName="uemail" required>
+                        <div *ngIf="signupform.get('uemail')?.invalid && signupform.get('uemail')?.touched"
+                            class="text-danger alert alert-danger">
+                            <small *ngIf="signupform.get('uemail')?.errors?.['required']">Email is required.</small>
+                            <small *ngIf="signupform.get('uemail')?.errors?.['email']">Invalid email format.</small>
+                        </div>
+
+
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Password</label>
-                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password"
+                            formControlName="upassword">
+                        <div class="alert alert-danger text-danger"
+                            *ngIf="signupform.get('upassword')?.['invalid'] && signupform.get('upassword')?.touched">
+                            <small *ngIf="signupform.get('upassword')?.errors?.['required']">Password is
+                                Required</small>
+                            <!-- <small *ngIf="signupform.get('upassword')?.errors?.['minlength']">password should be 6 cha
+                                long</small> -->
+                            <span class="block"
+                                [ngClass]="{'text-primary': signupform.get('upassword')?.value?.match('^(?=.*[A-Z])')}">At
+                                least oneu ppercase
+                                letter.</span>
+                            <span class="block"
+                                [ngClass]="{'text-primary': signupform.get('upassword')?.value?.match('(?=.*[a-z])')}">At
+                                least one lowercase
+                                letter.</span>
+                            <span class="block"
+                                [ngClass]="{'text-primary': signupform.get('upassword')?.value?.match('(.*[0-9].*)')}">At
+                                least one
+                                digit.</span>
+                            <span class="block"
+                                [ngClass]="{'text-primary': signupform.get('upassword')?.value?.match('(?=.*[!@#$%^&*])')}">At
+                                least one
+                                special
+                                character.</span>
+                            <span class="block"
+                                [ngClass]="{'text-primary': signupform.get('upassword')?.value?.match('.{8,}')}">At
+                                least 8 characters
+                                long.</span>
+
+                        </div>
+
+                        <div class="valid-feedback"
+                            *ngIf="signupform.get('upassword')?.dirty && signupform.get('upassword')?.value?.match('/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;')">
+                            Looks good!
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,13 +93,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <input type="text" class="form-control" id="inputCity" formControlName="city">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                        <select id="inputState" class="form-control" formControlName="state">
+                            <option>Choose</option>
+                            <option>Windsor</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
@@ -62,15 +107,8 @@
                         <input type="text" class="form-control" id="inputZip">
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                            Check me out
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!signupform.valid">Sign in</button>
                 Already a User ? <a class="link-underline-primary" (click)="registertoggle()"> Login</a>
             </form>
         </div>
