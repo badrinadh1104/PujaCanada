@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user';
@@ -48,5 +48,13 @@ export class SignUpComponent {
 
   signUp() {
     console.log(this.signupform.value)
+  }
+  ngOnInit(): void {
+    this.playAudio('../../../assets/chanting.mp3'); // Adjust path if necessary
+  }
+
+  playAudio(url: string): void {
+    const audio = new Audio(url);
+    audio.play();
   }
 }
