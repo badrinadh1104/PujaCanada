@@ -1,7 +1,7 @@
 <div class="banner">
-    <div class="container mt-5">
+    <div class="container ">
         <!-- inner nav bar -->
-        <div class="nav-scroller  fixed-top mt-5 m-auto" style="background-color: #e85d04; width: 65%;">
+        <!-- <div class="nav-scroller  fixed-top mt-5 m-auto" style="background-color: #e85d04; width: 65%;">
             <nav class="nav d-flex justify-content-center">
                 <a class="p-2 link-secondary">Puja Services</a>
                 <a class="p-2 link-secondary">Puja Products</a>
@@ -9,21 +9,25 @@
                 <a class="p-2 link-secondary">gallery</a>
                 <a class="p-2 link-secondary">help</a>
             </nav>
-        </div>
+        </div> -->
 
         <!-- hero -->
         <main>
 
             <section class="py-5 text-center container">
                 <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Album example</h1>
-                        <p class="lead text-muted">Something short and leading about the collection below—its contents,
-                            the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over
-                            it entirely.</p>
+                    <div class="col-lg-6 col-md-8 mx-auto col-img">
+                        <h1 class="fw-light" style="font-style: italic;">Explore Our Sacred Offerings</h1>
+                        <p class="lead text-muted" style="font-style: italic;">Welcome to your personalized dashboard!
+                            Here, you can effortlessly
+                            access our diverse range of spiritual services and products. Whether you're looking to book
+                            a puja tailored to your needs, browse our curated collection of puja essentials, or find
+                            traditional attire and accessories, everything you need is right here. Dive into your
+                            spiritual journey with ease and enrich your rituals with our thoughtfully selected
+                            offerings.</p>
                         <p>
-                            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                            <a href="#" class="btn btn-primary my-2">Book a Puja</a> &nbsp;
+                            <a (click)="scrollToSection()" class="btn btn-secondary my-2">Shop Puja Essentials</a>
                         </p>
                     </div>
                 </div>
@@ -32,351 +36,139 @@
             <div class="album py-5 bg-light ">
                 <div class="container">
                     <h1 class="text-center text-danger">Pooja Services</h1>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/archana.jpg" alt="Archana Pooja" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Archana Pooja is a detailed prayer performed to invoke the
-                                        blessings of the deity for personal or familial welfare.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
+                    <div *ngIf="paginatedPujas.length === 0" class="text-center">
+                        <!-- Loading Spinner -->
+                        <div class="spinner-border text-danger" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
+                    </div>
+                    <div *ngIf="paginatedPujas.length != 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col" *ngFor="let puja of paginatedPujas">
+                            <div class="card shadow-sm custom-card">
                                 <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/abhishekam.jpg" alt="Abhishekam" role="img">
+                                    [src]="getPujaImageUrl(puja.id)" alt="{{puja.name}}">
                                 <div class="card-body">
-                                    <p class="card-text">Abhishekam is a ritual of bathing the deity with holy
-                                        substances while chanting mantras to cleanse and purify.</p>
+                                    <p class="card-text">{{puja.description}}</p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            Book Appointment
+                                        </button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- src/app/components/appointment-form/appointment-form.component.html -->
+                                                        <div>
+                                                            <form (ngSubmit)="createAppointment()">
+                                                                <!-- Appointment Date -->
+                                                                <div class="mb-3">
+                                                                    <label for="appointmentDate"
+                                                                        class="form-label">Appointment Date:</label>
+                                                                    <input type="date" id="appointmentDate"
+                                                                        class="form-control" name="appointmentDate"
+                                                                        required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please choose a valid appointment date.
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Appointment Time -->
+                                                                <div class="mb-3">
+                                                                    <label for="appointmentTime"
+                                                                        class="form-label">Appointment Time:</label>
+                                                                    <input type="text" id="appointmentTime"
+                                                                        class="form-control" name="appointmentTime"
+                                                                        placeholder="hh:mm AM/PM" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a valid appointment time (e.g.,
+                                                                        08:45 AM).
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-warning"
+                                                                        data-bs-dismiss="modal">Create
+                                                                        Appointment</button>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/homam.jpg" alt="Abhishekam" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Homam is a fire ritual performed to invoke divine blessings and
-                                        cleanse negative energies through sacred offerings.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/housewarming.jpg" alt="House Warming" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Housewarming pooja is conducted to purify the new home, drive
-                                        away negative energies, and bring peace and prosperity.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/darshanam.jpg" alt="Darshanam" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Darshanam involves visiting the temple to receive the divine
-                                        blessings and grace of the deity through sight.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/kalyanam.png" alt="kalyanam" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Kalyanam is a ceremonial wedding ritual performed for the deity
-                                        to celebrate the divine union and blessings for marital bliss.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/navgraha.jpg" alt="Navagraha" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Navagraha pooja is performed to appease the nine celestial
-                                        planets and mitigate the negative influences in one's life.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/kumkum.jpg" alt="Kumkum Archana" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Kumkum Archana is a special pooja where kumkum is offered to
-                                        the deity, symbolizing auspiciousness and prosperity.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/asthi.jpg" alt="Asthi Pooja" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Asthi Pooja is a ritual performed to honor and provide a
-                                        respectful farewell to the departed soul by immersing ashes in holy water.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="pagination d-flex justify-content-center mt-2">
+                        <button class="btn btn-danger" (click)="previousPage()"
+                            [disabled]="currentPage === 0">Previous</button>&nbsp;
+                        <button class="btn btn-danger" (click)="nextPage()"
+                            [disabled]="(currentPage + 1) * itemsPerPage >= pujas.length">Next</button>
+                    </div>
                 </div>
             </div>
 
 
-            <div class="album py-5 bg-light mt-2">
+            <div class="album py-5 bg-light mt-2" id="Puja_Products">
                 <div class="container">
                     <h1 class="text-center text-danger">Pooja Products</h1>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/coconut.jpg" alt="Coconut" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Coconut is used in various poojas and rituals, symbolizing
-                                        purity, fertility, and prosperity.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
+                    <div *ngIf="paginatedproducts.length === 0" class="text-center">
+                        <!-- Loading Spinner -->
+                        <div class="spinner-border text-danger" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-                        <div class="col">
+                    </div>
+                    <div *ngIf="paginatedproducts.length != 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col" *ngFor="let prod of paginatedproducts">
                             <div class="card shadow-sm">
                                 <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/Deepam_oil.png" alt="Oil" role="img">
+                                    [src]="getProductImageUrl(prod.id)" alt="{{prod.name}}" role="img">
 
 
                                 <div class="card-body">
-                                    <p class="card-text">Deepam oil is essential for lighting lamps during poojas,
-                                        symbolizing the dispelling of darkness and ignorance.</p>
+                                    <h3>{{prod.name}}</h3><span class="badge badge-danger">{{prod.discount}}% OFF</span>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            <button type="button" class="btn btn-sm btn-warning">
+                                                CART</button>
+                                            <button type="button" class="btn btn-sm btn-primary">
+                                                WISHLIST</button>
                                         </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/deepam.jpg" alt="Deepalu" role="img">
-
-                                <div class="card-body">
-                                    <p class="card-text">Deepalu (lamps) are used in poojas to create a divine and
-                                        peaceful ambiance, invoking blessings from the deity.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
+                                        <small
+                                            class="text text-decoration-line-through  badge badge-warning">{{prod.price}}</small>
+                                        <span class="badge badge-primary">
+                                            <small class="text">{{prod.price-(prod.price*0.01*prod.discount) |
+                                                number:'1.2-2'}} $/-</small>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/dhoopsticks.jpg" alt="Dhoopsticks" role="img">
+                    </div>
 
+                    <!-- Pagination for Products -->
 
-                                <div class="card-body">
-                                    <p class="card-text">Dhoopsticks are burned during poojas for their fragrant smoke,
-                                        which purifies the environment and pleases the deities.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/flowers.jpg" alt="Flowers" role="img">
-
-
-                                <div class="card-body">
-                                    <p class="card-text">Flowers are an integral part of poojas, offered to deities to
-                                        show devotion and invoke blessings.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/othulu.jpg" alt="Othulu" role="img">
-
-
-                                <div class="card-body">
-                                    <p class="card-text">Othulu are commonly used in Hindu rituals for lighting diyas,
-                                        symbolizing prosperity and used as offerings to deities</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/pasupu_kumkum.jpg" alt="Turmeric AND kumkum" role="img">
-
-
-                                <div class="card-body">
-                                    <p class="card-text">Turmeric and Kumkum are vital in Hindu rituals, symbolizing
-                                        purity, prosperity, and auspiciousness.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/photo.jpg" alt="GodPhotoFrame" role="img">
-
-
-                                <div class="card-body">
-                                    <p class="card-text">God photo frames are used to create a divine presence in homes,
-                                        enhancing spiritual connection during prayers and are must for any kind of puja
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    src="../../../assets/puja_samagri.jpg" alt="Puja Kit" role="img">
-
-
-                                <div class="card-body">
-                                    <p class="card-text">Puja kits include all necessary items for performing various
-                                        Hindu rituals, ensuring a complete and sacred pooja experience.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="pagination d-flex justify-content-center mt-2">
+                        <button class="btn btn-danger" (click)="previousProductsPage()"
+                            [disabled]="currentProductPage === 0">Previous</button>&nbsp;
+                        <button class="btn btn-danger" (click)="nextProductsPage()"
+                            [disabled]="(currentProductPage + 1) * ProductsperPage >= products.length">Next</button>
                     </div>
                 </div>
             </div>

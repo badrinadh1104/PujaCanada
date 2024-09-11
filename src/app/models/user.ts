@@ -1,11 +1,20 @@
+import { CartList } from "./cart-list";
+import { PujaAppointment } from "./puja-appointment";
+import { PujaUserOrder } from "./puja-user-order";
+import { UserAddress } from "./user-address";
+import { WishList } from "./wish-list";
+
 export interface User {
      id:number;
-     name:string;
+     userName:string;
      email:string;
-     password:string;
-     gender:string;
      phone:string;
-     state:string;
-     city:string;
+     password:string;
+     userAddress:UserAddress;
+     userWishList:WishList;
+     userCartList:CartList;
+     orders:PujaUserOrder[];
+     pujaAppointments:PujaAppointment[];
+     
      
 }

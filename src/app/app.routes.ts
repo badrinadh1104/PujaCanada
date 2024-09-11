@@ -9,10 +9,12 @@ import { PriestDashboardComponent } from './customer/priest-dashboard/priest-das
 
 export const routes: Routes = [
     {path:"",component:HomeComponent},
-    {path:"customer/login",component:SignUpComponent},
-    {path:"customer/dashboard",component:CustomerDashboardComponent},
-    {path:"customer/cart",component:CustomerCartComponent},
-    {path:"admin/admindashboard",component:AdminDashboardComponent},
+    // {path:"customer/login",component:SignUpComponent},
+    // {path:"customer/dashboard",component:CustomerDashboardComponent},
+    // {path:"customer/cart",component:CustomerCartComponent},
+    { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
     {path:"Priest/PriestDash",component:PriestDashboardComponent},
+    // {path:"admin/AdminDash",component:AdminDashboardComponent},
+    { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
     {path:"**",component:PageNotFoundComponent},
 ];

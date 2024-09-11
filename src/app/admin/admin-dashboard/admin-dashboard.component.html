@@ -1,0 +1,526 @@
+<div class="banner">
+    <div class="inner-banner">
+        <!-- Success Alert -->
+        <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                <use xlink:href="#check-circle-fill"></use>
+            </svg>
+            <div>{{ successMessage }}</div>
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Error:">
+                <use xlink:href="#exclamation-triangle-fill"></use>
+            </svg>
+            <div>{{ errorMessage }}</div>
+        </div>
+
+        <div class="box-1">
+            <div class="box-2">
+                <h3 style="text-align: center;">CRUD operations</h3>
+                <div class="admin-crud">
+
+                    <button type="button" class="btn btn-primary custom-btn" data-toggle="modal"
+                        data-target="#AddProduct">
+                        Add Product
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="AddProduct" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content" style="background-color: #4f0505; color: white;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Product</h5>
+                                    <button type="button" class="close custom-btn" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="productForm" (ngSubmit)="AddProduct()">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputProductName">ProductName</label>
+                                                <input type="text" class="form-control" id="inputProductName"
+                                                    placeholder="ProductName" formControlName="name">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputProductPrice">ProductPrice</label>
+                                                <input type="number" class="form-control" id="inputProductPrice"
+                                                    placeholder="ProductPrice" formControlName="price">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="inputProductDiscount">ProductDiscount</label>
+                                                <input type="number" class="form-control" id="inputProductDiscount"
+                                                    placeholder="DiscountPercentage" formControlName="discount">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Product Available</label>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        formControlName="available">
+                                                        <option value="" disabled selected>Choose your option</option>
+                                                        <option [value]="true">AVAILABLE</option>
+                                                        <option [value]="false">NOT AVAILABLE</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="inputProductPrice">ProductQuantity</label>
+                                                    <input type="number" class="form-control" id="inputProductQuantity"
+                                                        placeholder="Quantity" formControlName="quantity">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">ProductCategory</label>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        formControlName="category">
+                                                        <option value="puja">PUJA</option>
+                                                        <option value="photo">PHOTO</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">ProductImage</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1"
+                                                (change)="onFileChange($event)">
+                                        </div>
+                                        <button type="submit" [disabled]="!productForm.valid"
+                                            class="btn btn-primary custom-btn" style="width: 100%;">ADD PRODUCT</button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary custom-btn" data-toggle="modal" data-target="#AddPuja">ADD
+                        Puja</button>
+                    <div class="modal fade" id="AddPuja" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content" style="background-color: rgb(51, 35, 84);color: white;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Puja</h5>
+                                    <button type="button" class="close custom-btn" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="pujaForm" (ngSubmit)="AddPuja()">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPujaname">PujaName</label>
+                                                <input type="text" class="form-control" id="inputPujaname"
+                                                    placeholder="PujaName" formControlName="name">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputPujaPrice">PujaPrice</label>
+                                                <input type="number" class="form-control" id="inputPujaPrice"
+                                                    placeholder="PujaPrice" formControlName="price">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="inputPujaDiscount">PujaDiscount</label>
+                                                <input type="number" class="form-control" id="inputPujaDiscount"
+                                                    placeholder="PujaDiscountPercentage" formControlName="discount">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPujaDescription">PujaDescription</label>
+                                            <!-- <input type="text" class="form-control" id="inputPujaDescription" placeholder="PujaDescription"> -->
+                                            <textarea class="form-control" id="inputPujaDescription" rows="2"
+                                                formControlName="description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Puja Image</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1"
+                                                (change)="OnPujaImageChange($event)">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary custom-btn"
+                                            style="width: 100%;">AddPuja</button>
+                                    </form>
+
+                                </div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary custom-btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary custom-btn">Save changes</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary custom-btn" data-toggle="modal" data-target="#update_puja">update
+                        Puja</button>
+                    <div class="modal fade" id="update_puja" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Update Puja</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="UpdatePujaForm" (ngSubmit)="updatePuja()">
+                                        <div class="form-inline">
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="pujaId" class="sr-only">PUJA ID</label>
+                                                <input type="number" class="form-control" id="pujaId"
+                                                    placeholder="enter PUJA ID" (input)="OnInputPujaID($event)"
+                                                    formControlName="id">
+                                            </div>
+                                            <button [disabled]="" type="submit" class="btn btn-primary mb-2">Confirm
+                                                PUJA UPDATE</button>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPujaname">PujaName</label>
+                                                <input type="text" class="form-control" id="inputPujaname"
+                                                    placeholder="{{update_puja.name}}" formControlName="name">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputPujaPrice">PujaPrice</label>
+                                                <input type="number" class="form-control" id="inputPujaPrice"
+                                                    placeholder="{{update_puja.price}}" formControlName="price">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="inputPujaDiscount">PujaDiscount</label>
+                                                <input type="number" class="form-control" id="inputPujaDiscount"
+                                                    placeholder="{{update_puja.discount}}" formControlName="discount">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPujaDescription">PujaDescription</label>
+                                            <!-- <input type="text" class="form-control" id="inputPujaDescription" placeholder="PujaDescription"> -->
+                                            <textarea class="form-control" id="inputPujaDescription" rows="2"
+                                                formControlName="description"
+                                                placeholder="{{update_puja.description}}"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Puja Image</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1"
+                                                (change)="OnPujaImageChange($event)">
+                                            <img [src]="getpujaImage(update_puja.id)" alt="" class="product-image">
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-warning custom-btn" data-target="#Update_product" data-toggle="modal">update
+                        Product</button>
+                    <div class="modal fade" id="Update_product" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">UPDATE PRODUCT</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="UpdateProductForm" (ngSubmit)="UpdateProduct()">
+                                        <div class="form-inline">
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="productId" class="sr-only">PRODUCT ID</label>
+                                                <input type="number" class="form-control" id="productId"
+                                                    placeholder="enter PROD_ID" (input)="OnInputProductID($event)"
+                                                    formControlName="id">
+                                            </div>
+                                            <button [disabled]="" type="submit" class="btn btn-primary mb-2">Confirm
+                                                PUJA UPDATE</button>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputProductName">ProductName</label>
+                                                <input type="text" class="form-control" id="inputProductName"
+                                                    placeholder="{{updateProduct.name}}" formControlName="name">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputProductPrice">ProductPrice</label>
+                                                <input type="number" class="form-control" id="inputProductPrice"
+                                                    placeholder="{{updateProduct.price}}" formControlName="price">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="inputProductDiscount">ProductDiscount</label>
+                                                <input type="number" class="form-control" id="inputProductDiscount"
+                                                    placeholder="{{updateProduct.discount}}" formControlName="discount">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Product Available</label>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        formControlName="available">
+                                                        <option value="" disabled selected>Choose Availablity</option>
+                                                        <option [value]="true">AVAILABLE</option>
+                                                        <option [value]="false">NOT AVAILABLE</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="inputProductPrice">ProductQuantity</label>
+                                                    <input type="number" class="form-control" id="inputProductQuantity"
+                                                        placeholder="{{updateProduct.quantity}}"
+                                                        formControlName="quantity">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">ProductCategory</label>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        formControlName="category">
+                                                        <option value="" disabled selected>Choose Product Category
+                                                        </option>
+                                                        <option value="puja">PUJA</option>
+                                                        <option value="photo">PHOTO</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">ProductImage</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1"
+                                                (change)="onFileChange($event)">
+                                            <img [src]="getImageUrl(updateProduct.id)" alt="" class="product-image">
+                                        </div>
+                                        <!-- <button type="submit" [disabled]="!productForm.valid"
+                                            class="btn btn-primary custom-btn" style="width: 100%;">ADD PRODUCT</button> -->
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-warning custom-btn">Assign Puja</button>
+                    <button class="btn btn-warning custom-btn">Assign Delivery</button>
+                    <!-- TO Delete USER -->
+                    <button class="btn btn-danger custom-btn" data-toggle="modal" data-target="#delete_user">DELETE
+                        user</button>
+                    <div class="modal fade" id="delete_user" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Delete User</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form #user_delete_form="ngForm" (ngSubmit)="deletUser()">
+                                        <div class="form-inline">
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="productId" class="sr-only">PRODUCT ID</label>
+                                                <input type="number" class="form-control" id="productId"
+                                                    placeholder="enter PROD_ID" (input)="OnInputUserID($event)"
+                                                    [(ngModel)]="userId_toDelete" name="userId" required>
+                                            </div>
+                                            <button [disabled]="user_delete_form.invalid" type="submit"
+                                                class="btn btn-danger mb-2">Confirm
+                                                DELETE USER</button>
+                                        </div>
+                                    </form>
+
+                                    <div class="card" style="width: 18rem;" *ngIf="userId_toDelete != null">
+                                        <div class="card-body">UserName:
+                                            <h5 class="card-title">{{userdetails.userName}}</h5>
+
+                                            <hr>
+                                            UserEmail
+                                            <h6 class="card-subtitle mb-2">{{userdetails.email}}
+                                            </h6>
+
+                                            <hr>
+                                            UserPhone
+                                            <h6 class="card-text">{{userdetails.phone}}</h6>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger custom-btn" data-target="#delete_puja" data-toggle="modal">DELETE
+                        PUJA</button>
+                    <div class="modal fade" id="delete_puja" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="UpdateProductForm" (ngSubmit)="UpdateProduct()">
+                                        <div class="form-inline">
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="productId" class="sr-only">PUJA ID</label>
+                                                <input type="number" class="form-control" id="productId"
+                                                    placeholder="enter PROD_ID" (input)="OnInputProductID($event)"
+                                                    formControlName="id">
+                                            </div>
+                                            <button [disabled]="" type="submit" class="btn btn-danger mb-2">Confirm
+                                                DELETE PUJA</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger custom-btn">DELETE product</button>
+
+                </div>
+            </div>
+            <div class="box-2">Box-2</div>
+        </div>
+        <div class="box-1">
+            <div class="box-2">
+                <div class="admin-crud">
+                    <button type="button" class="btn btn-primary custom-btn" data-toggle="modal"
+                        data-target="#showproducts">
+                        Show Products
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="showproducts" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog custom-modal-dialog " role="document">
+                            <div class="modal-content">
+                                <div class="modal-header d-flex justify-content-between align-items-center">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">All Products</h5>
+                                    <form class="form-inline my-2 my-lg-0 ml-auto">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                            aria-label="Search" (input)="Oninput($event)">
+                                        <button class="btn btn-outline-success my-2 my-sm-0"
+                                            type="submit">Search</button>
+                                    </form>
+                                    <button type="button" class="close custom-btn" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Product Price</th>
+                                                <th scope="col">Product Discount</th>
+                                                <th scope="col">Quantity Available</th>
+                                                <th scope="col">Product Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <small *ngIf="productsList.length === 0">No products</small>
+                                            <tr *ngFor="let item of filteredProducts">
+                                                <th scope="row">{{item.id}}</th>
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.price}}</td>
+                                                <td>{{item.discount}}</td>
+                                                <td>{{item.quantity}}</td>
+                                                <td><img [src]="getImageUrl(item.id)" alt="{{ item.name }}"
+                                                        class="product-image"></td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary custom-btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary custom-btn">Save changes</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary custom-btn" data-target="#showpujas" data-toggle="modal">Show
+                        Pujas</button>
+
+                    <div class="modal fade" id="showpujas" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog custom-modal-dialog " role="document">
+                            <div class="modal-content">
+                                <div class="modal-header d-flex justify-content-between align-items-center">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">All Products</h5>
+                                    <form class="form-inline my-2 my-lg-0 ml-auto">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                            aria-label="Search" (input)="Oninput($event)">
+                                        <button class="btn btn-outline-success my-2 my-sm-0"
+                                            type="submit">Search</button>
+                                    </form>
+                                    <button type="button" class="close custom-btn" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Puja Name</th>
+                                                <th scope="col">Puja description</th>
+                                                <th scope="col">Puja price</th>
+                                                <th scope="col">Puja discount</th>
+                                                <th scope="col">puja image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <small *ngIf="productsList.length === 0">No Pujas</small>
+                                            <tr *ngFor="let item of pujasList">
+                                                <th scope="row">{{item.id}}</th>
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.price}}</td>
+                                                <td>{{item.discount}}</td>
+                                                <td><img [src]="getpujaImage(item.id)" alt="{{ item.name }}"
+                                                        class="product-image"></td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary custom-btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary custom-btn">Save changes</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary custom-btn">Show Priest</button>
+                </div>
+
+            </div>
+            <div class="box-2">Box-4</div>
+        </div>
+
+    </div>
+</div>

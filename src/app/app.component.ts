@@ -13,4 +13,14 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'PujaCanada';
+
+  // ngOnInit(): void {
+  //   this.playAudio('../../../assets/chanting.mp3'); // Adjust path if necessary
+  // }
+
+  // playAudio(url: string): void {
+  //   const audio = new Audio(url);
+  //   audio.play();
+  // }
 }
+

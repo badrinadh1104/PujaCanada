@@ -1,12 +1,11 @@
-<nav class="navbar navbar-expand-lg fixed-top  px-5 " style="background-color: #e3e137;">
-    <a class="navbar-brand" href="#">PujaCanada</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg fixed-top  px-5 " style="background-color: #fb8500;">
+    <a class=" navbar-brand" href="#">PujaCanada</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -15,7 +14,7 @@
                     routerLinkActive="router-link-active">UserDash</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/admin/admindashboard']"
+                <a class="nav-link" [routerLink]="['admin/AdminDash']"
                     routerLinkActive="router-link-active">AdminDash</a>
             </li>
             <li class="nav-item">

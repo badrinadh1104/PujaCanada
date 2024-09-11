@@ -49,12 +49,12 @@ export class SignUpComponent {
   signUp() {
     console.log(this.signupform.value)
   }
-  ngOnInit(): void {
-    this.playAudio('../../../assets/chanting.mp3'); // Adjust path if necessary
-  }
+  // ngOnInit(): void {
+  //   this.playAudio('../../../assets/chanting.mp3'); // Adjust path if necessary
+  // }
 
-  playAudio(url: string): void {
-    const audio = new Audio(url);
-    audio.play();
-  }
+  // playAudio(url: string): void {
+  //   const audio = new Audio(url);
+  //   audio.play();
+  // }
 }

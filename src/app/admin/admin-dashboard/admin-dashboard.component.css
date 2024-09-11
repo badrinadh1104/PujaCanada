@@ -1,5 +1,91 @@
 .banner{
     width: 100%;
     height: 100vh;
-    background-color: #fb8500;
+    background-color: #780000;
+    box-sizing: border-box;
+    padding-top: 56px;
+}
+.inner-banner{
+    width: 100%;
+    height: 90vh;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.box-1{
+    height: 50%;
+    width: 100%;
+    border: 2px solid yellow;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.box-2{
+    height: 100%;
+    width: 100%;
+    border: 2px solid green;
+    
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Optional: Adjust spacing around the container */
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+
+}
+.product-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+  }
+.admin-crud {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Optional: Adjust the spacing between buttons */
+    padding: auto;
+}
+
+.custom-btn {
+    height: 75px;
+    flex: 0 0 calc(33.333% - 10px); /* 3 buttons per row, considering the gap */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    align-items: center;
+    justify-content: center;
+}
+.custom-modal-dialog {
+    max-width: 90%; /* Adjust width as needed */
+}
+
+
+@media (max-width: 1200px) { /* For tablets or small desktops */
+    .custom-btn {
+       
+        height: 80px; 
+    }
+    .custom-modal-dialog {
+        max-width: 80%; /* Adjust width for large screens */
+    }
+}
+
+@media (max-width: 992px) { /* For small tablets or large phones */
+    .custom-btn {
+        height: 70px; 
+    }
+}
+
+@media (max-width: 768px) { /* For mobile phones */
+    .custom-btn {
+        height: 60px; 
+    }
+}
+
+@media (max-width: 576px) { /* For very small mobile devices */
+    .custom-btn {
+        height: 45px; 
+        font-size: 0.6em; /* Smallest text for very small screens */;
+    }
 }
